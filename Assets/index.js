@@ -1,6 +1,6 @@
 const APIkey = '0db0ce786ae41bdff606b62d15ada316';
 
-//Search for a city's weather:
+//Grabbing elements that I will dynamically update using the DOM
 const spanEl = document.getElementById('emoji')
 const ccHumid = document.getElementById('cc-humid')
 const ccWind = document.getElementById('cc-wind')
@@ -9,6 +9,31 @@ const currentCityDisplay = document.getElementById('current-city');
 const searchBtn = document.getElementById('searchBtn')
 const searchBox = document.getElementById('search'); 
 
+// Function to update the city history
+function updateCityHistory(city) {
+    let cityHistory = JSON.parse(localStorage.getItem("cityHistory")) || [];
+    cityHistory.push(city);
+    localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+  
+    // Call a function to update the display of city history, e.g., renderCityHistory();
+  }
+  
+  // Function to render the city history
+  function renderCityHistory() {
+    const cityHistory = JSON.parse(localStorage.getItem("cityHistory")) || [];
+    historyContainer.innerHTML = "";
+  
+    cityHistory.forEach((city) => {
+      const historyItem = document.createElement("div");
+      historyItem.textContent = city;
+      historyContainer.appendChild(historyItem);
+    });
+  }
+  
+  // Initial rendering of city history on page load
+  renderCityHistory();
+
+  //function to display weather data for cities which contains the fetch() to the API data.
 async function searchCities(city) {
     
     fetch(
@@ -57,11 +82,16 @@ async function searchCities(city) {
     
 }
 
-//5-Day Forecast Display:
+function updateCityHistory(city) {
+    let cityHistory = JSON.parse(localStorage.getItem("cityHistory")) || [];
+    cityHistory.push(city);
+    localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+  
 
-
-//create a function for each day in 5-day forecast, like displayDay1(), or create some kind of loop like if it is day-1, display this data?
-
+  }
+  
+  
+//click event for city search
 searchBtn.addEventListener('click', function(event){
     event.preventDefault()
     let city = searchBox.value.trim()
